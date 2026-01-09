@@ -1,4 +1,4 @@
-# URL Shortener (Node.js + Express + MongoDB)
+# URL Shortener service
 
 A simple URL shortener service built using Node.js, Express, MongoDB, and Mongoose.
 
