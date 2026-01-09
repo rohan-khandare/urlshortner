@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = require("./routes/url");
-const MONGOURL = require('.env')
+
+require("dotenv").config();
+
 const app = express();
-const port = 8001;
+const port = process.env.PORT || 8001;
 
 // middleware
 app.use(express.json());
@@ -11,7 +13,7 @@ app.use(express.json());
 // DB connection
 mongoose
   .connect( 
-    MONGOURL
+    process.env.MONGOURL
   )
   .then(() => console.log("DB connected"))
   .catch((err) => console.error(err));
