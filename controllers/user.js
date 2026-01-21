@@ -22,15 +22,18 @@ async function handleLoginUser(req,res){
         return res.render("login",{error : "Invalid Username or Password"})
     }
 
+    //stateful
     //create sesssionid and send cookie
-
     // dynamic import for uuid
-  const { v4: uuidv4 } = await import("uuid");
+    // const { v4: uuidv4 } = await import("uuid");
 
-    const sessionId = uuidv4();
-    console.log(sessionId)
-    setUser(sessionId,user)
-    res.cookie("uid",sessionId)
+    // const sessionId = uuidv4();
+    // console.log(sessionId)
+    // setUser(sessionId,user)
+
+    // stateless we dont keep track of user and sesion id using map, here we directly send user a token encoded with paylod(user details)
+    const token = setUser(user)
+    res.cookie("uid",token)
 
     return res.redirect("/");
 
