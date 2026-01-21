@@ -11,7 +11,13 @@ const urlSchema = new mongoose.Schema({
         required:true
     },
     //array of timestaps 
-    visitHistory:[{timestamp:{ type: Number}}] 
+    visitHistory:[{timestamp:{ type: Number}}],
+   
+    //works like foreign key
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 
 }, {timestamps:true});
 

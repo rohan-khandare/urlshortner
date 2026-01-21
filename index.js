@@ -6,6 +6,9 @@ const userRoute = require('./routes/user')
 const path = require("path");
 const URL = require("./models/url");
 
+const cookiePaerser = require("cookie-parser")
+const {restrictToLoggedUserOnly,checkAuth} = require('./middlewares/auth')
+
 require("dotenv").config();
 
 const app = express();
@@ -18,6 +21,7 @@ app.set("views",path.resolve("./views"))
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(cookiePaerser());
 
 // DB connection
 mongoose
@@ -35,9 +39,10 @@ app.get("/test", async (req,res)=>{
 })
 
 
-
-app.use("/api/url", urlRoute);
-app.use("/",saticRoute);
+//using inline middleware for all url route
+// --inline only work for particular route
+app.use("/api/url", restrictToLoggedUserOnly, urlRoute);
+app.use("/",checkAuth,saticRoute);
 app.use("/user",userRoute);
 
 app.listen(port, () => console.log(`Server started at ${port}`));
