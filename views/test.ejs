@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URL Shortener</title>
+</head>
+<body>
+  <h1>All URLs</h1>
+
+  <ul>
+    <% urls.forEach(u => { %>
+      <li>
+        <%= u.shortId %> → <%= u.redirectUrl %>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URL Shortener</title>
+</head>
+<body>
+  <h1>URL Shortener</h1>
+
+ <div>
+    <form action="/api/url" method="post">
+        <label for="">Enter Your Original URL</label>
+        <input 
+            type="text",
+            name="url",
+            placeholder="https://example.com"
+        />
+        <button type="submit">Generate</button>        
+    </form>
+
+    <br>
+    <% if(locals.id) { %>
+        <p>URL Generated:  http://localhost:8001/api/url/<%= id %></p>
+    <% } %>
+    <br><br>
+
+    <% if(locals.urls) { %>
+
+        <table>
+            <thead>
+                <th>S.no</th>
+                <th>shortId</th>
+                <th>Redirect</th>
+                <th>Clicks</th>
+            </thead>
+            <tbody>
+                <% urls.forEach((url,index) => { %>
+                    <tr>
+                    <td><%= index+1  %></td>
+                    <td><%= url.shortId %></td>
+                    <td><%= url.redirectUrl %></td>
+                    <td><%= url.visitHistory.length%></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+ </div>
+
+</body>
+</html>
