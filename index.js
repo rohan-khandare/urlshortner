@@ -7,7 +7,7 @@ const path = require("path");
 const URL = require("./models/url");
 
 const cookiePaerser = require("cookie-parser")
-const {restrictToLoggedUserOnly,checkAuth} = require('./middlewares/auth')
+const {checkForAuthentication,restrictTo} = require('./middlewares/auth')
 
 require("dotenv").config();
 
@@ -22,6 +22,8 @@ app.set("views",path.resolve("./views"))
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cookiePaerser());
+//for every req --pass the function reference, don’t call it.
+app.use(checkForAuthentication);
 
 // DB connection
 mongoose
@@ -41,8 +43,9 @@ app.get("/test", async (req,res)=>{
 
 //using inline middleware for all url route
 // --inline only work for particular route
-app.use("/api/url", restrictToLoggedUserOnly, urlRoute);
-app.use("/",checkAuth,saticRoute);
-app.use("/user",userRoute);
+app.use("/api/url",restrictTo(["NORMAL"]), urlRoute);
+
+app.use("/", saticRoute);
+app.use("/user", userRoute);
 
 app.listen(port, () => console.log(`Server started at ${port}`));
